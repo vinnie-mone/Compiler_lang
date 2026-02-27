@@ -1,0 +1,201 @@
+﻿<Window x:Class="GUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="{DynamicResource AppTitle}"
+        Height="500" Width="800"
+        MinHeight="500" MinWidth="800"
+        AllowDrop="True"
+        Drop="Window_Drop"
+        Loaded="Window_Loaded">
+
+    <Window.InputBindings>
+        <KeyBinding Command="ApplicationCommands.New" Gesture="Ctrl+N" />
+        <KeyBinding Command="ApplicationCommands.Open" Gesture="Ctrl+O" />
+        <KeyBinding Command="ApplicationCommands.Save" Gesture="Ctrl+S" />
+    </Window.InputBindings>
+
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.New" Executed="NewFile_Click" />
+        <CommandBinding Command="ApplicationCommands.Open" Executed="OpenFile_Click" />
+        <CommandBinding Command="ApplicationCommands.Save" Executed="SaveFile_Click" />
+    </Window.CommandBindings>
+    
+    <DockPanel LastChildFill="True">
+
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="{DynamicResource MenuFile}">
+                <MenuItem Header="{DynamicResource MenuNew}" Click="NewFile_Click"/>
+                <MenuItem Header="{DynamicResource MenuOpen}" Click="OpenFile_Click"/>
+                <MenuItem Header="{DynamicResource MenuSave}" Click="SaveFile_Click"/>
+                <MenuItem Header="{DynamicResource MenuSaveAs}" Click="SaveAsFile_Click"/>
+                <Separator/>
+                <MenuItem Header="{DynamicResource MenuExit}" Click="Exit_Click"/>
+            </MenuItem>
+
+            <MenuItem Header="{DynamicResource MenuEdit}">
+                <MenuItem Header="{DynamicResource MenuUndo}" Command="ApplicationCommands.Undo"/>
+                <MenuItem Header="{DynamicResource MenuRedo}" Command="ApplicationCommands.Redo"/>
+                <Separator/>
+                <MenuItem Header="{DynamicResource MenuCut}" Command="ApplicationCommands.Cut"/>
+                <MenuItem Header="{DynamicResource MenuCopy}" Command="ApplicationCommands.Copy"/>
+                <MenuItem Header="{DynamicResource MenuPaste}" Command="ApplicationCommands.Paste"/>
+                <MenuItem Header="{DynamicResource MenuDelete}" Command="EditingCommands.Delete"/>
+                <Separator/>
+                <MenuItem Header="{DynamicResource MenuSelectAll}" Command="ApplicationCommands.SelectAll"/>
+            </MenuItem>
+
+            <MenuItem Header="{DynamicResource MenuRun}"/>
+
+            <MenuItem Header="{DynamicResource MenuHelp}">
+                <MenuItem Header="{DynamicResource MenuHelp}" Click="Help_Click"/>
+                <MenuItem Header="{DynamicResource MenuAbout}" Click="About_Click"/>
+            </MenuItem>
+
+            <MenuItem Header="{DynamicResource MenuLanguage}">
+                <MenuItem Header="Русский" Click="SetLangRu_Click"/>
+                <MenuItem Header="English" Click="SetLangEn_Click"/>
+            </MenuItem>
+        </Menu>
+
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Content="🆕" Click="NewFile_Click"/>
+                <Button Content="📂" Click="OpenFile_Click"/>
+                <Button Content="💾" Click="SaveFile_Click"/>
+                <Separator/>
+                <Button Content="↩" Command="ApplicationCommands.Undo"/>
+                <Button Content="🔄" Command="ApplicationCommands.Redo"/>
+                <Separator/>
+                <Button Content="📋" Command="ApplicationCommands.Copy"/>
+                <Button Content="✂️" Command="ApplicationCommands.Cut"/>
+                <Button Content="📑" Command="ApplicationCommands.Paste"/>
+                <Separator/>
+                <Label Content="Aа:"/>
+                <Button Content="+" Click="IncreaseFont_Click"/>
+                <Button Content="-" Click="DecreaseFont_Click"/>
+                <Separator/>
+                <Button Content="▶" />
+                <Button Content="❓" />
+                <Button Content="ℹ️" />
+            </ToolBar>
+        </ToolBarTray>
+
+
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <TextBlock x:Name="StatusTextBlock"/>
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right">
+                <TextBlock x:Name="CaretPositionTextBlock"/>
+            </StatusBarItem>
+        </StatusBar>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+
+            <TabControl x:Name="EditorTabControl" Grid.Row="0">
+
+                <TabControl.Resources>
+                    <Style TargetType="Paragraph">
+                        <Setter Property="Margin" Value="0"/>
+                    </Style>
+
+                    <Style TargetType="TabItem">
+                        <Setter Property="HeaderTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding}" Margin="0,0,5,0"/>
+                                        <Button Content="×"
+                                                Padding="3,0"
+                                                Background="Transparent"
+                                                BorderThickness="0"
+                                                FontWeight="Bold"
+                                                Click="CloseTab_Click"
+                                                Loaded="CloseButton_Loaded"
+                                                />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TabControl.Resources>
+
+                <TabItem Header="{DynamicResource Input}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox x:Name="LineNumbersTextBox"
+                                 Grid.Column="0"
+                                 IsReadOnly="True"
+                                 Background="#F0F0F0"
+                                 FontFamily="Consolas"
+                                 FontSize="14"
+                                 TextAlignment="Right"
+                                 Width="40"/>
+
+                        <RichTextBox x:Name="EditorRichTextBox"
+                                     Grid.Column="1"
+                                     FontFamily="Consolas"
+                                     FontSize="14"
+                                     AcceptsReturn="True"
+                                     TextChanged="DynamicEditor_TextChanged"
+                                     ScrollViewer.ScrollChanged="DynamicEditor_ScrollChanged"/>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+
+            <GridSplitter Grid.Row="1"
+                          Height="5"
+                          ResizeDirection="Rows"
+                          ResizeBehavior="PreviousAndNext"
+                          Background="#CCC"/>
+
+            <TabControl Grid.Row="2">
+                <TabItem Header="{DynamicResource TabMessages}">
+                    <TextBox x:Name="ResultTextBox"
+                             IsReadOnly="True"
+                             FontFamily="Consolas"
+                             TextWrapping="Wrap"/>
+                </TabItem>
+
+                <TabItem Header="{DynamicResource TabErrors}">
+                    <DataGrid x:Name="ErrorsDataGrid" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Line}">
+                                <DataGridTextColumn.HeaderStyle>
+                                    <Style TargetType="DataGridColumnHeader">
+                                        <Setter Property="Content" Value="{DynamicResource Line}"/>
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Binding="{Binding Column}">
+                                <DataGridTextColumn.HeaderStyle>
+                                    <Style TargetType="DataGridColumnHeader">
+                                        <Setter Property="Content" Value="{DynamicResource Column}"/>
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Width="*" Binding="{Binding Error}">
+                                <DataGridTextColumn.HeaderStyle>
+                                    <Style TargetType="DataGridColumnHeader">
+                                        <Setter Property="Content" Value="{DynamicResource Message}"/>
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </DockPanel>
+</Window>

@@ -1,0 +1,56 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+	<sys:String x:Key="AppTitle">Compiler</sys:String>
+    <sys:String x:Key="Output">Output</sys:String>
+    <sys:String x:Key="Input">Input</sys:String>
+    <sys:String x:Key="MenuFile">File</sys:String>
+	<sys:String x:Key="MenuNew">New</sys:String>
+	<sys:String x:Key="MenuOpen">Open</sys:String>
+	<sys:String x:Key="MenuSave">Save</sys:String>
+	<sys:String x:Key="MenuSaveAs">Save As</sys:String>
+    <sys:String x:Key="MenuExit">Exit</sys:String>
+    <sys:String x:Key="MenuEdit">Edit</sys:String>
+	<sys:String x:Key="MenuUndo">Undo</sys:String>
+	<sys:String x:Key="MenuRedo">Redo</sys:String>
+	<sys:String x:Key="MenuCut">Cut</sys:String>
+	<sys:String x:Key="MenuCopy">Copy</sys:String>
+	<sys:String x:Key="MenuPaste">Paste</sys:String>
+	<sys:String x:Key="MenuDelete">Delete</sys:String>
+    <sys:String x:Key="MenuSelectAll">Select All</sys:String>
+    <sys:String x:Key="MenuText">Text</sys:String>
+	<sys:String x:Key="MenuTaskStatement">Task Statement</sys:String>
+	<sys:String x:Key="MenuGrammar">Grammar</sys:String>
+	<sys:String x:Key="MenuGrammarClassification">Grammar Classification</sys:String>
+	<sys:String x:Key="MenuAnalysisMethod">Analysis Method</sys:String>
+	<sys:String x:Key="MenuTestExample">Test Example</sys:String>
+	<sys:String x:Key="MenuReferences">References</sys:String>
+    <sys:String x:Key="MenuSourceCode">Source Code</sys:String>
+    <sys:String x:Key="MenuRun">Run</sys:String>
+    <sys:String x:Key="MenuHelp">Help</sys:String>
+    <sys:String x:Key="MenuAbout">About</sys:String>
+    <sys:String x:Key="MenuLanguage">Language</sys:String>
+    <sys:String x:Key="TabMessages">Output</sys:String>
+    <sys:String x:Key="TabErrors">Errors</sys:String>
+    <sys:String x:Key="TooltipNew">New (Ctrl+N)</sys:String>
+	<sys:String x:Key="TooltipOpen">Open (Ctrl+O)</sys:String>
+	<sys:String x:Key="TooltipSave">Save (Ctrl+S)</sys:String>
+	<sys:String x:Key="TooltipUndo">Undo (Ctrl+Z)</sys:String>
+    <sys:String x:Key="TooltipRedo">Return(Ctrl+Y)</sys:String>
+	<sys:String x:Key="TooltipCopy">Copy (Ctrl+C)</sys:String>
+    <sys:String x:Key="TooltipCut">Delete</sys:String>
+	<sys:String x:Key="TooltipPaste">Paste (Ctrl+V)</sys:String>
+	<sys:String x:Key="TooltipRun">Run</sys:String>
+	<sys:String x:Key="TooltipHelp">Help</sys:String>
+    <sys:String x:Key="TooltipAbout">About</sys:String>
+    <sys:String x:Key="StatusReady">Ready</sys:String>
+    <sys:String x:Key="MsgModified">The file has been modified. Save changes?</sys:String>
+    <sys:String x:Key="MsgErrorOpen">Error opening file</sys:String>
+    <sys:String x:Key="MsgErrorSave">Error saving file</sys:String>
+    <sys:String x:Key="Line">Line</sys:String>
+    <sys:String x:Key="Column">Column</sys:String>
+    <sys:String x:Key="Message">Message</sys:String>
+    <sys:String x:Key="CaretInfo">Line: {0}, Symbol: {1}</sys:String>
+
+</ResourceDictionary>
